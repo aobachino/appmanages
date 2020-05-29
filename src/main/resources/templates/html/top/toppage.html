@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{css/toppage.css}">
+<script type="text/javascript" th:src="@{js/toppage.js}"></script>
+<script	th:src="@{http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js}"></script>
+<link rel="stylesheet" href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" />
+<script src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<title>応募管理</title>
+</head>
+<body>
+	<header class="navbar navbar-expand-lg navbar-light">
+		<a class="navbar-brand" href="/">応募管理</a>
+		<div th:if="${#session.getAttribute('user') == null}">
+			<a href="login" class="nav-link">ログイン</a>
+			<a href="register" class="nav-link">新規登録</a>
+		</div>
+		<div th:unless="${#session.getAttribute('user') == null}">
+			<form action="userInfo" method="post" class="nav-link">
+				<button class="nav-link">ユーザー情報</button>
+			</form>
+			<form action="logout" method="post" class="nav-link">
+				<button class="nav-link">ログアウト</button>
+			</form>
+		</div>
+	</header>
+	<br>
+	<main class="container">
+		<span id="error"></span>
+		<div class="row">
+			<input type="text" placeholder="キーワードを入力してください" class="search form-control col-7" style="margin-right:10px;">
+			<button onclick="search();" class="btn btn-primary col-2" style="margin-right:10px;">検索</button>
+			<button type="button" class="btn btn-primary col-2" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">絞り込み</button>
+		</div>
+		<br>
+		<div class="collapse" id="collapseExample">
+			<div class="card card-body">
+				<ul>
+					<li class="">
+						<p>業種:<br>
+							<input class="" type="radio" name="industry" id="" value="1">
+							<label class="" for="">金融</label>
+							<input class="" type="radio" name="industry" id="" value="2">
+							<label class="" for="">商社</label>
+							<input class="" type="radio" name="industry" id="" value="3">
+							<label class="" for="">保険</label>
+							<input class="" type="radio" name="industry" id="" value="4">
+							<label class="" for="">IT</label>
+						</p>
+					</li>
+					<li><p>職業:<br>
+							<input class="" type="radio" name="occupation" id="" value="1">
+							<label class="" for="">営業</label>
+							<input class="" type="radio" name="occupation" id="" value="2">
+							<label class="" for="">経理</label>
+							<input class="" type="radio" name="occupation" id="" value="3">
+							<label class="" for="">事務</label>
+							<input class="" type="radio" name="occupation" id="" value="4">
+							<label class="" for="">人事</label>
+						</p>
+					</li>
+					<li><p>資本金:<br>
+							<input class="" type="radio" name="capital" id="" value="1">
+							<label class="" for="">1000万以上</label>
+							<input class="" type="radio" name="capital" id="" value="2">
+							<label class="" for="">3000万以上</label>
+							<input class="" type="radio" name="capital" id="" value="3">
+							<label class="" for="">5000万以上</label>
+							<input class="" type="radio" name="capital" id="" value="4">
+							<label class="" for="">1億以上</label>
+						</p>
+					</li>
+					<li><p>社員数:<br>
+							<input class="" type="radio" name="employeeCnt" id="" value="1">
+							<label class="" for="">100人以上</label>
+							<input class="" type="radio" name="employeeCnt" id="" value="2">
+							<label class="" for="">300人以上</label>
+							<input class="" type="radio" name="employeeCnt" id="" value="3">
+							<label class="" for="">500人以上</label>
+							<input class="" type="radio" name="employeeCnt" id="" value="4">
+							<label class="" for="">1000人以上</label>
+						</p>
+					</li>
+					<li><p>創業:<br>
+							<input class="" type="radio" name="founding" id="" value="1">
+							<label class="" for="">1年以上</label>
+							<input class="" type="radio" name="founding" id="" value="2">
+							<label class="" for="">5年以上</label>
+							<input class="" type="radio" name="founding" id="" value="3">
+							<label class="" for="">10年以上</label>
+							<input class="" type="radio" name="founding" id="" value="4">
+							<label class="" for="">15年以上</label>
+						</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<br>
+		<div>
+			<form action="appDetail" method="post">
+				<table class="apps table">
+					<tr>
+						<th>求人</th>
+						<th>会社名</th>
+						<th>職種</th>
+						<th>#</th>
+					</tr>
+					<tr th:each="app,appnum : ${apps}">
+						<td th:text="${app.appName}">application_name</td>
+						<td th:text="${app.companyName}">company_name</td>
+						<td th:text="${app.occupationName}">application_explain</td>
+						<td><button th:id="${app.appId}" class="btn btn-primary" th:value="${app.appId}"
+								th:name="appid">応募</button></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</main>
+	<footer> </footer>
+</body>
+</html>
