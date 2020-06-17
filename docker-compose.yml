@@ -28,7 +28,7 @@ services:
     volumes:
     - .:/app
     environment:
-      JAR_TARGET: ApplyManage-0.0.1-SNAPSHOT.jar
+      JAR_TARGET: applymanage-0.0.1-SNAPSHOT.jar
       
 volumes:
   mysql-db:

@@ -9,18 +9,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.domain.User;
+import com.example.demo.common.ComMessage;
 import com.example.demo.model.LoginForm;
 import com.example.demo.service.UserService;
 
 @Controller
 public class LoginController {
 
-	@Autowired
-	private UserService userService;
+	private ComMessage message;
 
 	@Autowired
-	private TopPageController topPageController;
+	private UserService userService;
 
 	@Autowired
 	private AppController appController;
@@ -39,18 +38,18 @@ public class LoginController {
 	public ModelAndView loginChk(@ModelAttribute LoginForm logmo,HttpSession ses) {
 
 		ModelAndView mv;
-		User user = userService.userfind(logmo);
+		boolean userChk = userService.userfind(logmo,ses);
 
-		if(user != null) {
-			ses.setAttribute("user", user);
+		if(userChk) {
 			if(ses.getAttribute("apps") != null) {
 				String appId = ses.getAttribute("apps").toString();
 				return appController.appDetail(appId, ses);
 			}
-			return topPageController.top(ses);
+			mv = new ModelAndView("html/top/topage");
+			return mv;
 		}
 
-		mv = new ModelAndView("html/login/login");
+		mv = new ModelAndView("html/login/login","message",message.getUSER_NOTHING());
 		return mv;
 	}
 
@@ -60,11 +59,13 @@ public class LoginController {
 	@PostMapping(value="logout")
 	public ModelAndView logout(HttpSession ses) {
 
+		ModelAndView mv = new ModelAndView("html/top/toppage");
 		//ユーザー情報がnullでなければセッションを破棄する
 		if(ses.getAttribute("user") != null) {
 			ses.removeAttribute("user");
-			return topPageController.top(ses);
+
+			return mv;
 		}
-		return topPageController.top(ses);
+		return mv;
 	}
 }

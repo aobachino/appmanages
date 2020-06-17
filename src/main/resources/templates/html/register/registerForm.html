@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" th:href="@{css/toppage.css}">
-<script	th:src="@{http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js}"></script>
-<link rel="stylesheet" href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" />
+<script
+	th:src="@{http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js}"></script>
+<link rel="stylesheet"
+	href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" />
 <script src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script th:src="@{js/validation.js}"></script>
 <title>ユーザー登録</title>
 </head>
 <body>
@@ -14,34 +17,40 @@
 	</header>
 	<br>
 	<main class="container">
-		<table class="table">
-			<tr>
-				<th>ユーザーID</th>
-				<td><input type="text" class="form-control"></td>
-			</tr>
-			<tr>
-				<th>パスワード</th>
-				<td><input type="text" class="form-control"></td>
-			</tr>
-			<tr>
-				<th>※パスワード確認</th>
-				<td><input type="text" class="form-control"></td>
-			</tr>
-			<tr>
-				<th>電話番号</th>
-				<td><input type="text" class="form-control"></td>
-			</tr>
-			<tr>
-				<th>メールアドレス</th>
-				<td><input type="text" class="form-control"></td>
-			</tr>
-			<tr>
-				<th>※メールアドレス確認</th>
-				<td><input type="text" class="form-control"></td>
-			</tr>
+		<form action="registerForm" method="post">
+			<table class="table">
+				<tr>
+					<th>ユーザーID<span id="userIdErr"></span></th>
+					<td><input id="userId" type="text" class="form-control" name="id"></td>
+				</tr>
+				<tr>
+					<th>名前<span id="userNameErr"></span></th>
+					<td><input id="userName" type="text" class="form-control name" name="name"></td>
+				</tr>
 
-		</table>
-		<button class="btn btn-primary">登録</button>
+				<tr>
+					<th>パスワード<span id="userPassErr"></span></th>
+					<td><input id="userPass" type="password" class="form-control pass" name="pass"></td>
+				</tr>
+				<tr>
+					<th>※パスワード確認<span id="userPassConfErr"></span></th>
+					<td><input id="userPassConf" type="password" class="form-control passConf" name="passConf"></td>
+				</tr>
+				<tr>
+					<th>電話番号※ハイフンなし<span id="userTellErr"></span></th>
+					<td><input id="userTell" type="tel" class="form-control tellNum" name="tellNum"></td>
+				</tr>
+				<tr>
+					<th>メールアドレス<span id="userEmailErr"></span></th>
+					<td><input id="userEmail" type="email" class="form-control email" name="email"></td>
+				</tr>
+				<tr>
+					<th>※メールアドレス確認<span id="userEmailConfErr"></span></th>
+					<td><input id="userEmailConf" type="email" class="form-control emailConf" name="emailConf"></td>
+				</tr>
+			</table>
+			<button type="submit" class="btn btn-primary">登録</button>
+		</form>
 		<a class="btn btn-primary" href="login">ログイン</a>
 	</main>
 </body>

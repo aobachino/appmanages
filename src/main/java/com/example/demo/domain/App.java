@@ -45,4 +45,7 @@ public class App {
 
     @Column(name="_to")
     private String to;
+
+    @Column(name="delflg")
+    private String delflg;
 }

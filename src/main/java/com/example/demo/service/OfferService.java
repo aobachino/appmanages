@@ -18,8 +18,10 @@ public class OfferService {
 	private AppRepository appRepository;
 
 
-	//応募データinsert
-	public boolean insert(int appid,String userId) {
+	/*
+	 * 求人Insert
+	 */
+	public boolean offerInsert(int appid,String userId) {
 
 		boolean chkInsert = false;
 		App app = appRepository.findByAppId(appid);

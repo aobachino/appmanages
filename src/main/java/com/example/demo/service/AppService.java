@@ -9,11 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.App;
+import com.example.demo.model.AppSearchModel;
 import com.example.demo.repository.AppRepository;
 
 @Service
 @Transactional
 public class AppService {
+
+	private final String DELFLG = "Y";
 
     @Autowired
     private AppRepository appRepository;
@@ -21,7 +24,8 @@ public class AppService {
     private EntityManager entyty;
 
     public List<App> findAll() {
-        return appRepository.findAll();
+
+        return appRepository.findByDelflg(DELFLG);
     }
 
 	public App findApp(int app_id) {
@@ -32,6 +36,11 @@ public class AppService {
 //		appList.add(apps.getApplocation_explain());
 //		appList.add(apps.get_to());
 
+		return apps;
+	}
+
+	public List<App> findDetail(AppSearchModel appsearch){
+		List<App> apps = appRepository.appFindDetail(appsearch,entyty);
 		return apps;
 	}
 

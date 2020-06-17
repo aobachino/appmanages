@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" th:href="@{css/toppage.css}">
@@ -14,6 +14,8 @@
 	</header>
 	<br>
 	<main class="container">
+		<div class="alert alert-info" th:text="${message}" th:if="${message != null}"></div>
+		<br>
 		<form action="/loginChk" method="post">
 			<input type="text" placeholder="ログインID" name="userId" class="form-control"><br>
 			<input type="password" placeholder="パスワード" name="password" class="form-control"><br>
