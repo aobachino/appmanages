@@ -8,6 +8,7 @@ import com.example.demo.domain.Offer;
 import com.example.demo.repository.AppRepository;
 import com.example.demo.repository.OfferRepository;
 
+//応募管理DBとコントローラーの受け渡し
 @Service
 public class OfferService {
 

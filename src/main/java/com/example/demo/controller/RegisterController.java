@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.demo.model.RegisterModel;
 import com.example.demo.service.UserService;
 
+//ユーザー処理を受け取るコントローラー
 @Controller
 public class RegisterController {
 

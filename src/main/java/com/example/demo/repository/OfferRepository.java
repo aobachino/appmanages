@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.domain.Offer;
 
+//応募管理DBにアクセスする。
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, Integer>, JpaSpecificationExecutor<Offer>{
 

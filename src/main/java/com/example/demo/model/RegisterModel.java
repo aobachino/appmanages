@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+//ユーザー登録フォームモデル
 public class RegisterModel {
 
 	private String id;

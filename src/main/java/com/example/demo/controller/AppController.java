@@ -7,19 +7,21 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.common.ComMessage;
 import com.example.demo.domain.App;
 import com.example.demo.domain.User;
 import com.example.demo.model.AppSearchModel;
 import com.example.demo.service.AppService;
 import com.example.demo.service.OfferService;
 
-//クラスコメント
+//応募に関する画面に遷移するコントローラー
 @Controller
 public class AppController {
 
@@ -77,9 +79,12 @@ public class AppController {
 	 * 応募検索
 	 *
 	 */
-	@PostMapping(value="/search")
+	@GetMapping(value="/search")
 	@ResponseBody
 	public List<App> search(@ModelAttribute AppSearchModel appserch){
+
+		System.out.println(ComMessage.APPS_SEARCH_START);
+
 		List<App> apps;
 		if(appserch.getSearch_word() == null) {
 			apps = appservice.findAll();
@@ -96,6 +101,7 @@ public class AppController {
 //			list2.add(list);
 //		}
 //		ModelAndView mv = new ModelAndView("html/apply/toppage","apps",apps);
+		System.out.println(ComMessage.APPS_SEARCH_END);
 		return apps;
 	}
 }

@@ -12,6 +12,7 @@ import com.example.demo.domain.App;
 import com.example.demo.model.AppSearchModel;
 import com.example.demo.repository.AppRepository;
 
+//求人DBとコントローラーとのやり取りのクラス
 @Service
 @Transactional
 public class AppService {

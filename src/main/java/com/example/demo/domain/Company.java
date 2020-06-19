@@ -8,6 +8,7 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
+//会社管理DB
 @Data
 @Entity
 @Table(name = "company")

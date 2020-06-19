@@ -7,6 +7,7 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
+//ユーザー情報DB
 @Data
 @Entity
 @Table(name = "user")

@@ -7,6 +7,7 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
+//職種DB
 @Data
 @Entity
 @Table(name = "occupation")

@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-
+//応募詳細へのフォームモデル
 public class AppModel {
 	private int appId;
 

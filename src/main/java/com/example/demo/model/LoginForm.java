@@ -1,5 +1,5 @@
 package com.example.demo.model;
-
+//ログインフォームモデル
 public class LoginForm {
 
 	private String userId;

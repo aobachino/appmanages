@@ -13,10 +13,9 @@ import com.example.demo.common.ComMessage;
 import com.example.demo.model.LoginForm;
 import com.example.demo.service.UserService;
 
+//ログイン処理を行うコントローラー
 @Controller
 public class LoginController {
-
-	private ComMessage message;
 
 	@Autowired
 	private UserService userService;
@@ -37,6 +36,7 @@ public class LoginController {
 	@PostMapping(value = "loginChk")
 	public ModelAndView loginChk(@ModelAttribute LoginForm logmo,HttpSession ses) {
 
+		System.out.println(ComMessage.LOGIN_START);
 		ModelAndView mv;
 		boolean userChk = userService.userfind(logmo,ses);
 
@@ -45,11 +45,13 @@ public class LoginController {
 				String appId = ses.getAttribute("apps").toString();
 				return appController.appDetail(appId, ses);
 			}
-			mv = new ModelAndView("html/top/topage");
+			mv = new ModelAndView("html/top/toppage");
+			System.out.println(ComMessage.LOGIN_END);
 			return mv;
 		}
 
-		mv = new ModelAndView("html/login/login","message",message.getUSER_NOTHING());
+		mv = new ModelAndView("html/login/login","message",ComMessage.USER_NOTHING);
+		System.out.println(ComMessage.LOGIN_END);
 		return mv;
 	}
 

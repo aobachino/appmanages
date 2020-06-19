@@ -12,6 +12,7 @@ import com.example.demo.model.LoginForm;
 import com.example.demo.model.RegisterModel;
 import com.example.demo.repository.UserRepository;
 
+//ユーザーDBとコントローラーの受け渡し
 @Service
 public class UserService {
 

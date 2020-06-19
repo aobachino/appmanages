@@ -7,6 +7,7 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
+//求人管理DB
 @Data
 @Entity
 @Table(name = "application")
