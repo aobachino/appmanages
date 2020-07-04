@@ -13,6 +13,26 @@ import lombok.Data;
 @Table(name = "application")
 public class App {
 
+
+	public App(){
+		super();
+	}
+
+	public App(int appId,String appName,String appExplain,int industryId,String industryName,int companyId,String companyName,int occupationId, String occupationName,String from,String to,String delflg,int capacity) {
+		setAppId(appId);
+		setAppName(appName);
+		setAppExplain(appExplain);
+		setIndustryId(industryId);
+		setIndustryName(industryName);
+		setCompanyId(companyId);
+		setCompanyName(companyName);
+		setOccupationId(occupationId);
+		setOccupationName(occupationName);
+		setFrom(from);
+		setTo(to);
+		setDelflg(delflg);
+		setCapacity(capacity);
+	}
     @Id
     @Column(name="application_id")
     private int appId;
@@ -49,4 +69,8 @@ public class App {
 
     @Column(name="delflg")
     private String delflg;
+
+    @Column(name="capacity")
+    private int capacity;
+
 }

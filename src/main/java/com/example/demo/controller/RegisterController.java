@@ -1,14 +1,17 @@
 package com.example.demo.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.common.ComMessage;
 import com.example.demo.model.RegisterModel;
 import com.example.demo.service.UserService;
 
@@ -33,21 +36,40 @@ public class RegisterController {
 	 *
 	 */
 	@PostMapping(value = "registerForm")
-	public ModelAndView registerForm(@ModelAttribute RegisterModel remo,HttpSession ses) {
+	public ModelAndView registerForm(@Valid @ModelAttribute RegisterModel remo,HttpSession ses,BindingResult erorrs) {
 
 		ModelAndView mv = new ModelAndView("html/register/registerForm");
-//		if() {
-			if(remo.getPass().equals("")) {
-				if(remo.getPass().equals(remo.getPassConf()) && remo.getEmail().equals(remo.getEmailConf())) {
-					boolean chk = usersevice.register(remo);
+		String chkResultMessage = "";
 
-					if(chk) {
-						mv = new ModelAndView("html/login/login");
-						return mv;
-					}
-				}
+		if(erorrs.hasErrors()) {
+			mv = new ModelAndView("html/register/registerForm");
+		}else if( !(remo.getPass().equals(remo.getPassConf())) ) {
+			chkResultMessage = ComMessage.USER_REGISTER_FAILURE_NOT_SAME_PASS;
+			mv = new ModelAndView("html/register/registerForm","message",chkResultMessage);
+		}else if( !(remo.getEmail().equals(remo.getEmailConf())) ) {
+			chkResultMessage = ComMessage.USER_REGISTER_FAILURE_NOT_SAME_EMAIL;
+			mv = new ModelAndView("html/register/registerForm","message",chkResultMessage);
+		}else {
+			int chkRegister = usersevice.register(remo);
+
+			switch(chkRegister) {
+			case 0:
+				chkResultMessage = ComMessage.USER_REGISTER_COMPLETE;
+				mv = new ModelAndView("html/login/login","message",chkResultMessage);
+
+				break;
+			case 1:
+				chkResultMessage = ComMessage.USER_REGISTER_FAILURE_SAME_INFO;
+				mv = new ModelAndView("html/register/registerForm","message",chkResultMessage);
+				break;
+			case 2:
+				chkResultMessage = ComMessage.USER_REGISTER_FAILURE;
+				mv = new ModelAndView("html/register/registerForm","message",chkResultMessage);
+				break;
+			default: break;
+
 			}
-//		}
+		}
 		return mv;
 	}
 }

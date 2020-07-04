@@ -8,7 +8,7 @@ spring:
   profiles: localhost
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.99.100:3314/application_manage_db
+    url: jdbc:mysql://192.168.99.110:3314/application_manage_db
     username: root
     password: root
   jpa:

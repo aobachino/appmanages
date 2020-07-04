@@ -24,14 +24,18 @@ public class UserService {
 	 * なかった場合の処理がない
 	 */
 	public boolean userfind(LoginForm logmo,HttpSession ses) {
+
 		boolean chk = false;
-		List<User> userList = userRepository.findByUserIdAndUserPass(logmo.getUserId(), logmo.getPassword());
 		User user;
 
-		if(userList.size() == 1) {
-			user = userList.get(0);
-			chk = true;
-			ses.setAttribute("user", user);
+		synchronized(userRepository) {
+			List<User> userList = userRepository.findByUserIdAndUserPass(logmo.getUserId(), logmo.getPassword());
+
+			if(userList.size() == 1) {
+				user = userList.get(0);
+				chk = true;
+				ses.setAttribute("user", user);
+			}
 		}
 
 		return chk;
@@ -39,15 +43,19 @@ public class UserService {
 
 	/*
 	 * ユーザー情報登録
+	 * エスケープ処理がない
 	 */
-	public boolean register(RegisterModel remo) {
+	public int register(RegisterModel remo) {
 
-		boolean chkInsert = false;
-		User user = new User(remo.getId(),remo.getName(),remo.getPass(),remo.getTellNum(),remo.getEmail());
+		int chkInsert = 3;
 
-		if(user != null) {
-			user = userRepository.save(user);
-			chkInsert = true;
+		synchronized(userRepository){
+			User user = new User(remo.getId(),remo.getName(),remo.getPass(),remo.getTellNum(),remo.getEmail());
+
+			if(user != null) {
+				user = userRepository.save(user);
+				chkInsert = 0;
+			}
 		}
 
 		return chkInsert;

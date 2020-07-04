@@ -1,14 +1,36 @@
 package com.example.demo.model;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 //ユーザー登録フォームモデル
 public class RegisterModel {
 
+	@NotEmpty(message = "必須入力です ")
+	@Size(max = 20, message = "20文字以内で入力してください")
 	private String id;
+
+	@NotEmpty(message = "必須入力です")
+	@Size(max = 32, message = "32文字以内で入力してください")
 	private String name;
+
+	@NotEmpty(message = "必須入力です")
+	@Pattern(regexp = "[a-zA-z0-9]*", message = "アルファベットと数字のみで入力してください")
 	private String pass;
+
+	@NotEmpty(message = "必須入力です")
+	@Pattern(regexp = "[a-zA-z0-9]*", message = "アルファベットと数字のみで入力してください")
 	private String passConf;
+
+	@NotEmpty(message = "必須入力です")
+	@Pattern(regexp = "[0-9]{2,4}[0-9]{2,4}[0-9]{3,4}", message = "正しいフォーマットで入力してください")
 	private String tellNum;
+
+	@NotEmpty(message = "必須入力です")
 	private String email;
+
+	@NotEmpty(message = "必須入力です")
 	private String emailConf;
 
 	public String getId() {

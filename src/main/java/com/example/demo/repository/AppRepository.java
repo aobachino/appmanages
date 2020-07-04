@@ -20,14 +20,27 @@ public interface AppRepository  extends JpaRepository<App, Integer> {
 
 	App findByAppId(int id);
 
-	List<App> findByDelflg(String flg);
+//	List<App> findByDelflg(String flg,int limit);
 
-	public final String  STR_SQL = "select * from application where 1=1";
+	List<App> findByAppIdAndDelflg(int appId,String delflg);
+
+	public final String  STR_SQL1 = "select * from application where delflg=:delflg LIMIT 1, 20";
+	default public List<App> appFind(EntityManager entyty){
+
+		Query query = entyty.createNativeQuery(STR_SQL1,App.class);
+		query.setParameter("delflg", "Y");
+		List<App> apps;
+		 apps = query.getResultList();
+		return apps;
+	}
+
+	public final String  STR_SQL2 = "select * from application where delflg=:delflg";
 	default public List<App> appFindDetail(AppSearchModel appmo, EntityManager entyty){
 
 		String sqlStr = makeQuery(appmo);
 		Query query = entyty.createNativeQuery(sqlStr,App.class);
 		List<App> apps;
+		query.setParameter("delflg", "Y");
 
 		if(appmo.getIndustry() != null) {
 			query.setParameter("industryId", appmo.getIndustry());
@@ -65,7 +78,7 @@ public interface AppRepository  extends JpaRepository<App, Integer> {
 	}
 
 	default public String makeQuery(AppSearchModel appmo) {
-		StringBuffer sb = new StringBuffer(STR_SQL);
+		StringBuffer sb = new StringBuffer(STR_SQL2);
 
 		if(appmo.getIndustry() != null) {
 			sb.append(" and industry_id = :industryId");
@@ -87,6 +100,7 @@ public interface AppRepository  extends JpaRepository<App, Integer> {
 			sb.append(" and company_id in (select company_id from company where fromY >= :founding)");
 		}
 
+		sb.append(" LIMIT 1, 20");
 		String str = sb.toString();
 
 		return str;

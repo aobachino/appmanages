@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" th:href="@{css/toppage.css}">
+<link rel="stylesheet" th:href="@{css/header.css}">
 <link rel="stylesheet"
 	href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" />
 <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script type="text/javascript" src="js/header.js"></script>
@@ -13,7 +15,7 @@
 
 <title>応募管理</title>
 </head>
-<body id="top">
+<body id="top" class="accordion">
 	<div id="header"></div>
 	<main class="container">
 		<span id="error"></span> <span id="search_zero"></span>
@@ -24,7 +26,7 @@
 					style="margin-right: 10px;">
 				<button id="btn-search" class="btn btn-primary col-2"
 					style="margin-right: 10px;">検索</button>
-				<button type="button" class="btn btn-primary col-2"
+				<button type="button" class="btn btn-primary col-2 detailbtn"
 					data-toggle="collapse" data-target="#collapseExample"
 					aria-expanded="false" aria-controls="collapseExample">絞り込み</button>
 			</div>
@@ -90,18 +92,24 @@
 						<th>職種</th>
 						<th>#</th>
 					</tr>
-					<!-- 				<tr th:each="app,appnum : ${apps}">
-						<td th:text="${app.appName}">application_name</td>
-						<td th:text="${app.companyName}">company_name</td>
-						<td th:text="${app.occupationName}">application_explain</td>
-						<td><button th:id="${app.appId}" class="btn btn-primary" th:value="${app.appId}"
-								th:name="appid">応募</button></td>
-					</tr>
- -->
 				</table>
 			</form>
 		</div>
 	</main>
-	<div id="footer"></div>
+<!-- 	<script>
+	$(document).ready(function(){
+
+		$("button.btn.btn-primary.col-2.detailbtn").click(function(){
+			$("div.card.card-body").collapse("hide");
+		});
+
+		$("button.btn.btn-primary.navbar-toggler").click(function(){
+			$(".collapse").collapse("hide");
+		});
+	});
+
+	</script>
+ -->
+ <div id="footer"></div>
 </body>
 </html>

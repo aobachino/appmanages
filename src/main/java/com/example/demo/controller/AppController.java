@@ -38,18 +38,31 @@ public class AppController {
 	 *
 	 */
 	@PostMapping(value="/appcomp")
-	public String appConp(@RequestParam(name = "appid", defaultValue = "") String appid,HttpSession ses,HttpServletRequest req) {
+	public ModelAndView appConp(@RequestParam(name = "appid", defaultValue = "") String appid,HttpSession ses,HttpServletRequest req) {
 
+		ModelAndView mv;
 		System.out.print(req.getAttribute("apps"));
 		User user = (User) ses.getAttribute("user");
+		String insertMessage = "再度やりなおしてください";
 
 		if(ses.getAttribute("user") != null) {
-			boolean app = offerService.offerInsert(Integer.parseInt(appid),user.getUserId());
-			ses.removeAttribute("apps");
-			return "html/apply/appcomp";
-		}
+			int insertCheck = offerService.offerInsert(Integer.parseInt(appid),user.getUserId());
 
-		return "html/login/login";
+			switch(insertCheck) {
+
+			case 0: insertMessage = ComMessage.OFFER_COMPLETE;  break;
+			case 1: insertMessage = ComMessage.OFFER_FAILURE_OVER_CAPACITY; break;
+			case 2: insertMessage = ComMessage.OFFER_FAILURE; break;
+			default: break;
+
+			}
+
+			ses.removeAttribute("apps");
+			mv = new ModelAndView("html/apply/appcomp","message",insertMessage);
+			return mv;
+		}
+		mv = new ModelAndView("html/login/login");
+		return mv;
 	}
 
 	/*
@@ -86,11 +99,12 @@ public class AppController {
 		System.out.println(ComMessage.APPS_SEARCH_START);
 
 		List<App> apps;
-		if(appserch.getSearch_word() == null) {
-			apps = appservice.findAll();
-		}else {
-			apps = appservice.findDetail(appserch);
-		}
+		apps = appservice.findDetail(appserch);
+//		if(appserch.getSearch_word() == null) {
+//			apps = appservice.findAll();
+//		}else {
+//
+//		}
 
 //		for(int i = 0;i<apps.size();i++) {
 //			ArrayList<String> list = new ArrayList<>();

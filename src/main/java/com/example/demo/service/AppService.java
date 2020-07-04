@@ -26,16 +26,12 @@ public class AppService {
 
     public List<App> findAll() {
 
-        return appRepository.findByDelflg(DELFLG);
+        return appRepository.appFind(entyty);
     }
 
 	public App findApp(int app_id) {
-		// TODO 自動生成されたメソッド・スタブ
+
 		App apps = entyty.find(App.class,app_id);
-//		appList.add(apps.getApplication_name());
-//		appList.add(apps.getCompany_name());
-//		appList.add(apps.getApplocation_explain());
-//		appList.add(apps.get_to());
 
 		return apps;
 	}
