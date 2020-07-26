@@ -24,7 +24,7 @@ public class RegisterModel {
 	private String passConf;
 
 	@NotEmpty(message = "必須入力です")
-	@Pattern(regexp = "[0-9]{2,4}[0-9]{2,4}[0-9]{3,4}", message = "正しいフォーマットで入力してください")
+	@Pattern(regexp = "[0-9]*", message = "正しいフォーマットで入力してください")
 	private String tellNum;
 
 	@NotEmpty(message = "必須入力です")

@@ -24,9 +24,9 @@ public class AppService {
     @Autowired
     private EntityManager entyty;
 
-    public List<App> findAll() {
+    public List<App> findAll(int pageNum) {
 
-        return appRepository.appFind(entyty);
+        return appRepository.appFind(entyty,pageNum);
     }
 
 	public App findApp(int app_id) {
@@ -36,8 +36,8 @@ public class AppService {
 		return apps;
 	}
 
-	public List<App> findDetail(AppSearchModel appsearch){
-		List<App> apps = appRepository.appFindDetail(appsearch,entyty);
+	public List<App> findDetail(AppSearchModel appsearch,int pageNum){
+		List<App> apps = appRepository.appFindDetail(appsearch,entyty,pageNum);
 		return apps;
 	}
 

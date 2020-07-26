@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" th:href="@{css/toppage.css}">
 <link rel="stylesheet" th:href="@{css/header.css}">
-<link rel="stylesheet"
-	href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" />
-<script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" src="js/header.js"></script>
 <script type="text/javascript" src="js/toppage.js"></script>
 
@@ -85,31 +85,13 @@
 		<br>
 		<div>
 			<form action="appDetail" method="post">
-				<table id="apps" class="apps table">
-					<tr>
-						<th>求人</th>
-						<th>会社名</th>
-						<th>職種</th>
-						<th>#</th>
-					</tr>
-				</table>
-			</form>
+				<div id="apps"></div>
+ 			</form>
+		</div>
+		<br>
+		<div aria-label="Page navigation"id="pageButton">
 		</div>
 	</main>
-<!-- 	<script>
-	$(document).ready(function(){
-
-		$("button.btn.btn-primary.col-2.detailbtn").click(function(){
-			$("div.card.card-body").collapse("hide");
-		});
-
-		$("button.btn.btn-primary.navbar-toggler").click(function(){
-			$(".collapse").collapse("hide");
-		});
-	});
-
-	</script>
- -->
- <div id="footer"></div>
+	<div id="footer"></div>
 </body>
 </html>

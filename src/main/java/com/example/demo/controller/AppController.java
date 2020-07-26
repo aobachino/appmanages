@@ -29,7 +29,6 @@ public class AppController {
 	@Autowired
 	private AppService appservice;
 
-
 	@Autowired
 	private OfferService offerService;
 
@@ -37,28 +36,36 @@ public class AppController {
 	 * 応募完了
 	 *
 	 */
-	@PostMapping(value="/appcomp")
-	public ModelAndView appConp(@RequestParam(name = "appid", defaultValue = "") String appid,HttpSession ses,HttpServletRequest req) {
+	@PostMapping(value = "/appcomp")
+	public ModelAndView appConp(@RequestParam(name = "appid", defaultValue = "") String appid, HttpSession ses,
+			HttpServletRequest req) {
 
 		ModelAndView mv;
 		System.out.print(req.getAttribute("apps"));
 		User user = (User) ses.getAttribute("user");
 		String insertMessage = "再度やりなおしてください";
 
-		if(ses.getAttribute("user") != null) {
-			int insertCheck = offerService.offerInsert(Integer.parseInt(appid),user.getUserId());
+		if (ses.getAttribute("user") != null) {
+			int insertCheck = offerService.offerInsert(Integer.parseInt(appid), user.getUserId());
 
-			switch(insertCheck) {
+			switch (insertCheck) {
 
-			case 0: insertMessage = ComMessage.OFFER_COMPLETE;  break;
-			case 1: insertMessage = ComMessage.OFFER_FAILURE_OVER_CAPACITY; break;
-			case 2: insertMessage = ComMessage.OFFER_FAILURE; break;
-			default: break;
+			case 0:
+				insertMessage = ComMessage.OFFER_COMPLETE;
+				break;
+			case 1:
+				insertMessage = ComMessage.OFFER_FAILURE_OVER_CAPACITY;
+				break;
+			case 2:
+				insertMessage = ComMessage.OFFER_FAILURE;
+				break;
+			default:
+				break;
 
 			}
 
 			ses.removeAttribute("apps");
-			mv = new ModelAndView("html/apply/appcomp","message",insertMessage);
+			mv = new ModelAndView("html/apply/appcomp", "message", insertMessage);
 			return mv;
 		}
 		mv = new ModelAndView("html/login/login");
@@ -69,19 +76,19 @@ public class AppController {
 	 * 応募詳細
 	 *
 	 */
-	@PostMapping(value="/appDetail")
-	public ModelAndView appDetail(@RequestParam(name = "appid", defaultValue = "") String appid,HttpSession ses) {
+	@PostMapping(value = "/appDetail")
+	public ModelAndView appDetail(@RequestParam(name = "appid", defaultValue = "") String appid, HttpSession ses) {
 
 		ModelAndView mv;
 
-		if(appid != "") {
+		if (appid != "") {
 
 			App appList = appservice.findApp(Integer.parseInt(appid));
-			mv = new ModelAndView("html/apply/appdetail","apps",appList);
+			mv = new ModelAndView("html/apply/appdetail", "apps", appList);
 			ses.setAttribute("apps", appList.getAppId());
 			return mv;
 
-		}else{
+		} else {
 
 			mv = new ModelAndView("html/top/toppage");
 			return mv;
@@ -92,30 +99,52 @@ public class AppController {
 	 * 応募検索
 	 *
 	 */
-	@GetMapping(value="/search")
+	@GetMapping(value = "/search")
 	@ResponseBody
-	public List<App> search(@ModelAttribute AppSearchModel appserch){
+	public List<App> search(@ModelAttribute AppSearchModel appserch, HttpSession ses) {
 
+		int pageNum = 1;
+		ses.setAttribute("pageNum", pageNum);
+		ses.setAttribute("searchSelect", appserch);
 		System.out.println(ComMessage.APPS_SEARCH_START);
 
 		List<App> apps;
-		apps = appservice.findDetail(appserch);
-//		if(appserch.getSearch_word() == null) {
-//			apps = appservice.findAll();
-//		}else {
-//
-//		}
+		apps = appservice.findDetail(appserch,pageNum);
 
-//		for(int i = 0;i<apps.size();i++) {
-//			ArrayList<String> list = new ArrayList<>();
-//			list.add(apps.get(i).getAppName());
-//			list.add(apps.get(i).getCompanyName());
-//			list.add(apps.get(i).getOccupationName());
-//			list.add(String.valueOf(apps.get(i).getAppId()));
-//			list2.add(list);
-//		}
-//		ModelAndView mv = new ModelAndView("html/apply/toppage","apps",apps);
 		System.out.println(ComMessage.APPS_SEARCH_END);
 		return apps;
 	}
+
+	/*
+	 * ページング処理
+	*/
+	@GetMapping(value="/paging")
+	@ResponseBody
+	public List<App> pageChange(@RequestParam(name = "pageNum", defaultValue = "") String pageNum,HttpSession ses){
+
+		//二十リクエストを考えた実装
+		int pageCnt=0;
+		if(!pageNum.isBlank()) {
+			if(pageNum.equals("next")) {
+				pageCnt = Integer.parseInt(ses.getAttribute("pageNum").toString()) + 1;
+			}else if(pageNum.equals("prev")) {
+				pageCnt = Integer.parseInt(ses.getAttribute("pageNum").toString()) - 1;
+			}else {
+				pageCnt = Integer.parseInt(pageNum);
+			}
+		}
+
+		System.out.println(ComMessage.APPS_SEARCH_PAGEING_START);
+		List<App> apps;
+		if(ses.getAttribute("searchSelect") == null) {
+			apps = appservice.findAll(pageCnt);
+		}else {
+			AppSearchModel appserch = (AppSearchModel) ses.getAttribute("searchSelect");
+			apps = appservice.findDetail(appserch,pageCnt);
+		}
+		ses.setAttribute("pageNum",String.valueOf(pageCnt));
+		System.out.println(ComMessage.APPS_SEARCH_PAGEING_END);
+		return apps;
+	}
+
 }

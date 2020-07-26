@@ -20,13 +20,6 @@ public class TopPageController {
 	@Autowired
 	AppService appservice;
 
-//	@GetMapping(value = "/")
-//	@ResponseBody
-//	public List<App> top() {
-//		// 求人情報取得
-//		List<App> apps = appservice.findAll();
-//		return apps;
-//	}
 
 	@GetMapping(value = "/")
 	public ModelAndView top(HttpSession ses) {
@@ -37,9 +30,11 @@ public class TopPageController {
 
 	@GetMapping(value = "topdata")
 	@ResponseBody
-	public List<App> topdata() {
+	public List<App> topdata(HttpSession ses) {
 		// 求人情報取得
-		List<App> apps = appservice.findAll();
+		int pageNum = 1;
+		ses.setAttribute("pageNum",pageNum);
+		List<App> apps = appservice.findAll(pageNum);
 		return apps;
 	}
 

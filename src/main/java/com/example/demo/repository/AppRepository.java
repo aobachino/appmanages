@@ -24,23 +24,37 @@ public interface AppRepository  extends JpaRepository<App, Integer> {
 
 	List<App> findByAppIdAndDelflg(int appId,String delflg);
 
-	public final String  STR_SQL1 = "select * from application where delflg=:delflg LIMIT 1, 20";
-	default public List<App> appFind(EntityManager entyty){
+	/*
+	 * 求人の全件検索
+	 * ※ページ番号に文字列を入れた場合の処理がない
+	*/
+	public final String  STR_SQL1 = "select * from application where delflg=:delflg LIMIT 20 OFFSET :page";
+	default public List<App> appFind(EntityManager entyty,int pageNum){
 
 		Query query = entyty.createNativeQuery(STR_SQL1,App.class);
 		query.setParameter("delflg", "Y");
+		query.setParameter("page", 20 *(pageNum - 1));
 		List<App> apps;
 		 apps = query.getResultList();
 		return apps;
 	}
 
+	/*
+	 * 求人の詳細検索
+	 * ※ページ番号に文字列を入れた場合の処理がない
+	 * 検索文字列が空白のみの場合の処理がない
+	*/
 	public final String  STR_SQL2 = "select * from application where delflg=:delflg";
-	default public List<App> appFindDetail(AppSearchModel appmo, EntityManager entyty){
+	default public List<App> appFindDetail(AppSearchModel appmo, EntityManager entyty,int pageNum){
 
 		String sqlStr = makeQuery(appmo);
 		Query query = entyty.createNativeQuery(sqlStr,App.class);
 		List<App> apps;
 		query.setParameter("delflg", "Y");
+
+		if(appmo.getSearch_word() != "") {
+			query.setParameter("searchword", "%"+ appmo.getSearch_word() +"%");
+		}
 
 		if(appmo.getIndustry() != null) {
 			query.setParameter("industryId", appmo.getIndustry());
@@ -72,6 +86,7 @@ public interface AppRepository  extends JpaRepository<App, Integer> {
 			query.setParameter("founding", founding);
 		}
 
+		query.setParameter("page", 20 *(pageNum - 1));
 	    apps = query.getResultList();
 
 		return apps;
@@ -79,6 +94,10 @@ public interface AppRepository  extends JpaRepository<App, Integer> {
 
 	default public String makeQuery(AppSearchModel appmo) {
 		StringBuffer sb = new StringBuffer(STR_SQL2);
+
+		if(appmo.getSearch_word() != "") {
+			sb.append(" and concat(application_name, applocation_explain,industry_name,company_name,occupation_name) like :searchword");
+		}
 
 		if(appmo.getIndustry() != null) {
 			sb.append(" and industry_id = :industryId");
@@ -100,7 +119,7 @@ public interface AppRepository  extends JpaRepository<App, Integer> {
 			sb.append(" and company_id in (select company_id from company where fromY >= :founding)");
 		}
 
-		sb.append(" LIMIT 1, 20");
+		sb.append(" LIMIT 20 OFFSET :page");
 		String str = sb.toString();
 
 		return str;
