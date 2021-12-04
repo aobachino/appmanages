@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{css/toppage.css}">
+<script
+	th:src="@{http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js}"></script>
+<script type="text/javascript" src="js/header.js"></script>
+<link rel="stylesheet"
+	href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" />
+<script src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<title>ログイン</title>
+</head>
+<body>
+	<div id="header"></div>
+	<main class="container">
+		<div class="alert alert-info" th:text="${message}"
+			th:if="${message != null}"></div>
+		<br>
+		<form action="/loginChk" method="post">
+			<input type="text" placeholder="ログインID" name="userId"
+				class="form-control"><br> <input type="password"
+				placeholder="パスワード" name="password" class="form-control"><br>
+			<button type="submit" class="btn btn-primary">ログイン</button>
+		</form>
+		<br> <a href="register" class="btn btn-primary">新規登録</a>
+	</main>
+
+</body>
+</html>

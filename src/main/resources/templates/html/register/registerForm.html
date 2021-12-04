@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{css/toppage.css}">
+<script
+	th:src="@{http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js}"></script>
+<script type="text/javascript" src="js/header.js"></script>
+<link rel="stylesheet"
+	href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" />
+<script src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script th:src="@{js/validation.js}"></script>
+<title>ユーザー登録</title>
+</head>
+<body>
+	<div id="header"></div>
+	<main class="container">
+		<div class="alert alert-info" th:text="${message}"
+			th:if="${message != null}"></div>
+		<br>
+		<form action="registerForm" method="post" th:object="${registerModel}">
+			<table class="table">
+				<tr>
+					<th>ユーザーID</th>
+					<td><input id="userId" type="text" class="form-control"
+						name="id" th:field="*{id}"><br> <span id="userIdErr"></span>
+						<span th:if="${#fields.hasErrors('id')}" th:errors="*{id}"
+						class="alert alert-danger"></span></td>
+				</tr>
+				<tr>
+					<th>名前</th>
+					<td><input id="userName" type="text" class="form-control name"
+						name="name" th:field="*{name}"><br> <span
+						id="userNameErr"></span> <span
+						th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+						class="alert alert-danger"></span></td>
+				</tr>
+
+				<tr>
+					<th>パスワード</th>
+					<td><input id="userPass" type="password"
+						class="form-control pass" name="pass" th:field="*{pass}"><br>
+						<span id="userPassErr"></span> <span
+						th:if="${#fields.hasErrors('pass')}" th:errors="*{pass}"
+						class="alert alert-danger"></span></td>
+				</tr>
+				<tr>
+					<th>※パスワード確認</th>
+					<td><input id="userPassConf" type="password"
+						class="form-control passConf" name="passConf"
+						th:field="*{passConf}"><br> <span
+						id="userPassConfErr"></span> <span
+						th:if="${#fields.hasErrors('passConf')}" th:errors="*{passConf}"
+						class="alert alert-danger"></span></td>
+				</tr>
+				<tr>
+					<th>電話番号※ハイフンなし</th>
+					<td><input id="userTell" type="tel"
+						class="form-control tellNum" name="tellNum" th:field="*{tellNum}"><br>
+						<span id="userTellErr"></span> <span
+						th:if="${#fields.hasErrors('tellNum')}" th:errors="*{tellNum}"
+						class="alert alert-danger"></span></td>
+				</tr>
+				<tr>
+					<th>メールアドレス</th>
+					<td><input id="userEmail" type="email"
+						class="form-control email" name="email" th:field="*{email}"><br>
+						<span id="userEmailErr"></span> <span
+						th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+						class="alert alert-danger"></span></td>
+				</tr>
+				<tr>
+					<th>※メールアドレス確認</th>
+					<td><input id="userEmailConf" type="email"
+						class="form-control emailConf" name="emailConf"
+						th:field="*{emailConf}"><br> <span
+						id="userEmailConfErr"></span> <span
+						th:if="${#fields.hasErrors('emailConf')}" th:errors="*{emailConf}"
+						class="alert alert-danger"></span></td>
+				</tr>
+			</table>
+			<button type="submit" class="btn btn-primary">登録</button>
+		</form>
+		<a class="btn btn-primary" href="login">ログイン</a>
+	</main>
+</body>
+</html>

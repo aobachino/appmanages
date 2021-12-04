@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{css/toppage.css}">
+<link rel="stylesheet" th:href="@{css/header.css}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/header.js"></script>
+<script type="text/javascript" src="js/toppage.js"></script>
+
+<title>応募管理</title>
+</head>
+<body id="top" class="accordion">
+	<div id="header"></div>
+	<main class="container">
+		<span id="error"></span> <span id="search_zero"></span>
+		<form class="search">
+			<div class="row">
+				<input type="text" placeholder="キーワードを入力してください"
+					class="form-control col-7" name="search_word"
+					style="margin-right: 10px;">
+				<button id="btn-search" class="btn btn-primary col-2"
+					style="margin-right: 10px;">検索</button>
+				<button type="button" class="btn btn-primary col-2 detailbtn"
+					data-toggle="collapse" data-target="#collapseExample"
+					aria-expanded="false" aria-controls="collapseExample">絞り込み</button>
+			</div>
+			<br>
+			<div class="collapse" id="collapseExample">
+				<div class="card card-body">
+					<ul>
+						<li class="industry">
+							<p>
+								業種:<br> <input type="radio" name="industry" id="" value="1">
+								<label for="">金融</label> <input type="radio" name="industry"
+									id="" value="2"> <label for="">保険</label> <input
+									type="radio" name="industry" id="" value="3"> <label
+									for="">商社</label> <input type="radio" name="industry" id=""
+									value="4"> <label for="">IT</label>
+							</p>
+						</li>
+						<li class="occupation"><p>
+								職業:<br> <input type="radio" name="occupation" id=""
+									value="1"> <label for="">営業</label> <input type="radio"
+									name="occupation" id="" value="2"> <label for="">経理</label>
+								<input type="radio" name="occupation" id="" value="3"> <label
+									for="">事務</label> <input type="radio" name="occupation" id=""
+									value="4"> <label class="" for="">人事</label>
+							</p></li>
+						<li class="capital"><p>
+								資本金:<br> <input type="radio" name="capital" id=""
+									value="1000"> <label for="">1000万以上</label> <input
+									type="radio" name="capital" id="" value="3000"> <label
+									for="">3000万以上</label> <input type="radio" name="capital" id=""
+									value="5000"> <label for="">5000万以上</label> <input
+									type="radio" name="capital" id="" value="10000"> <label
+									for="">1億以上</label>
+							</p></li>
+						<li class="employeeCnt"><p>
+								社員数:<br> <input type="radio" name="employeeCnt" id=""
+									value="100"> <label for="">100人以上</label> <input
+									type="radio" name="employeeCnt" id="" value="300"> <label
+									for="">300人以上</label> <input type="radio" name="employeeCnt"
+									id="" value="500"> <label for="">500人以上</label> <input
+									type="radio" name="employeeCnt" id="" value="1000"> <label
+									for="">1000人以上</label>
+							</p></li>
+						<li class="founding"><p>
+								創業:<br> <input type="radio" name="founding" id="" value="1">
+								<label for="">1年以上</label> <input type="radio" name="founding"
+									id="" value="5"> <label for="">5年以上</label> <input
+									type="radio" name="founding" id="" value="10"> <label
+									for="">10年以上</label> <input type="radio" name="founding" id=""
+									value="15"> <label for="">15年以上</label>
+							</p></li>
+					</ul>
+				</div>
+			</div>
+		</form>
+		<br>
+		<div>
+			<form action="appDetail" method="post">
+				<div id="apps"></div>
+ 			</form>
+		</div>
+		<br>
+		<div aria-label="Page navigation"id="pageButton">
+		</div>
+	</main>
+	<div id="footer"></div>
+</body>
+</html>

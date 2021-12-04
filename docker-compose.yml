@@ -1,0 +1,36 @@
+version: '2'
+services:
+  dbserver:
+    build: ./docker/mysql
+    image: application_manage_db:0.0.1
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --skip-character-set-client-handshake
+    restart: always
+    environment:
+      MYSQL_DATABASE: application_manage_db
+      MYSQL_USER: sboot
+      MYSQL_PASSWORD: sboot
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+    - "3314:3306"
+    volumes:
+    - ./docker/mysql/initdb.d:/docker-entrypoint-initdb.d
+    - ./docker/mysql/conf.d:/etc/mysql/conf.d
+    - ./log/mysql:/var/log/mysql
+
+  app:
+    build: .
+    image: applymanage/boot:0.0.1
+    depends_on:
+     - dbserver
+    ports:
+    - "8080:8080"
+    volumes:
+    - .:/app
+    environment:
+      JAR_TARGET: applymanage-0.0.1-SNAPSHOT.jar
+      
+volumes:
+  mysql-db:
+    driver: local
+    

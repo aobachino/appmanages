@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{css/toppage.css}">
+<script
+	th:src="@{http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js}"></script>
+<script type="text/javascript" src="js/header.js"></script>
+<link rel="stylesheet"
+	href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" />
+<script src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<title>応募確認</title>
+</head>
+<body>
+	<div id="header"></div>
+	<main class="container">
+
+		<form action="/appcomp" method="post">
+			<table class="table">
+				<tr>
+					<th>応募ID</th>
+					<td th:text="${apps.appId}"></td>
+				</tr>
+				<tr>
+					<th>応募内容</th>
+					<td th:text="${apps.appName}"></td>
+				</tr>
+				<tr>
+					<th>会社名</th>
+					<td th:text="${apps.companyName}"></td>
+				</tr>
+				<tr>
+					<th>職種</th>
+					<td th:text="${apps.occupationName}"></td>
+				</tr>
+				<tr>
+					<th>概要</th>
+					<td th:text="${apps.appExplain}"></td>
+				</tr>
+			</table>
+			<button class="btn btn-primary" th:name="appid"
+				th:value="${apps.appId}">応募を完了する</button>
+		</form>
+		<br>
+		<button onclick="history.back()" class="btn btn-primary">戻る</button>
+	</main>
+</body>
+</html>
